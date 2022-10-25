@@ -27,9 +27,8 @@ zlim([0 0.6]);
 
 %% Equations of motion
 % Compute the B and C matrices and the g vector
-B = inertialMatrix(robot);
-C = christoffel(robot);
-g = gravity(robot);
-equationsOfMotion(B, c, g);
-
-
+B = inertialMatrix(robot)
+C = christoffel(robot)
+g = gravityVector(robot)
+% Construct the equations
+eqns = tau == B*ddq + C*dq;

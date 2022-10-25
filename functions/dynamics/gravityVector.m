@@ -1,6 +1,6 @@
-function g = gravity(robot)
-    % GRAVITY Computes the gravity term vector.
-    %   g = GRAVITY(robot) where robot is the robot parameter struct.
+function g = gravityVector(robot)
+    % GRAVITYVECTOR Computes the gravity term vector.
+    %   g = GRAVITYVECTOR(robot) where robot is the robot parameter struct.
     
     % Set up symbols for the joint variables
     syms d0 a1 a3 d2 q1 q2 q3 dq1 dq2 dq3 h1 a2 h3 c2 b2 r1 r3
