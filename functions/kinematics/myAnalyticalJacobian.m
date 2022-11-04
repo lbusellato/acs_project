@@ -9,6 +9,8 @@ function JA = myAnalyticalJacobian(robotParams)
     
     % Compute the direct kinematics from the DH parameters
     [Ti] = myDirectKinematics(robotParams.DH_table_sym);
-    % Analytical jacobian
+    % Analytical jacobian - gradients of the positions
     JA = [diff(Ti(1:3,4,4), q1), diff(Ti(1:3,4,4), q2), diff(Ti(1:3,4,4), q3)];
+    % Add the constant lines relative to angular velocity
+    JA = [JA; 1 0 0; 0 0 0; 0 0 1];
 end

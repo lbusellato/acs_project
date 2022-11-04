@@ -3,7 +3,7 @@ function B = inertialMatrix(robot)
     %   b = INERTIALMATRIX(robot) where robot is the robot parameter struct.
     
     % Set up symbols for the joint variables
-    syms d0 a1 d2 a3 q1 q2 q3 h1 a2 h3 c2 b2 r1 r3
+    syms d0 a1 d2 a3 q1 q2 q3 h1 a2 h3 c2 b2 r1 r3 m1 m2 m3
     assume([h1 a2 h3], 'real');
 
     % Compute the positions of the CoMs wrt the base frame

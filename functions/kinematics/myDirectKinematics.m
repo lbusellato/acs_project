@@ -1,9 +1,8 @@
 function [Ti] = myDirectKinematics(DH_table)
     % MYDIRECTKINEMATICS Computes the direct kinematics from a DH parameter
     % table.
-    %   Ti = MYDIRECTKINEMATICS(robotParams) where robotParams is a 
-    % struct containing the robot's DH table. Ti is a vector of
-    % transformation matrices.
+    %   Ti = MYDIRECTKINEMATICS(DH_table) where DH_table is the robot's DH 
+    % table. Ti is a vector of transformation matrices.
     
     % Set up symbols for the joint variables
     syms d0 a1 d2 a3 q1 q2 q3

@@ -35,12 +35,29 @@ config = randomConfiguration(robot_urdf);
 % Check my direct kinematics against the toolbox's estimation
 checkDirectKinematics(robot_urdf, robot, config);
 
+%% 
+syms x y z
+Rx = [1,0,0;0,cos(x),-sin(x);0,sin(x),cos(x)];
+Ry = [cos(y),0,sin(y);0,1,0;-sin(y),0,cos(y)];
+Rz = [cos(z),-sin(z),0;sin(z),cos(z),0;0,0,1];
+zyx = simplify(Rz*Ry*Rx)
+zyz = simplify(Rz*Ry*Rz)
+zxz = simplify(Rz*Rx*Rz)
+zxy = simplify(Rz*Rx*Ry)
+Ti(1:3,1:3,4)*[0,0,1;0,1,0;-1,0,0]
+
 %% INVERSE KINEMATICS
 
 % Move the robot to a random pose
 config = randomConfiguration(robot_urdf);
+toolbox_base_to_ee = getTransform(robot_urdf, config, 'ee', 'base_link');
+ee_pose = toolbox_base_to_ee(1:3,4);
+toolbox_base_to_w = getTransform(robot_urdf, config, 'Link4', 'base_link');
+w_pose = toolbox_base_to_w(1:3,4);
+% Compute inverse kinematics "by hand"
+[q1, q2, q3] = myInverseKinematics(robot, ee_pose, w_pose)
 % Check the computed inverse kinematics against the toolbox's estimation
-checkInverseKinematics(robot_urdf, robot, config);
+checkInverseKinematics(robot_urdf, config);
 
 %% JACOBIANS
 

@@ -31,4 +31,9 @@ B = inertialMatrix(robot)
 C = christoffel(robot)
 g = gravityVector(robot)
 % Construct the equations
+syms tau1 tau2 tau3 ddq1 ddq2 ddq3 dq1 dq2 dq3
+assume([tau1 tau2 tau3 ddq1 ddq2 ddq3 dq1 dq2 dq3], 'real');
+dq = [dq1 dq2 dq3]';
+ddq = [ddq1 ddq2 ddq3]';
+tau = [tau1 tau2 tau3]';
 eqns = tau == B*ddq + C*dq;
