@@ -32,9 +32,9 @@ robot.link3_mass = vpa(robot.link_density * robot.link3_volume);
 robot.link4_mass = vpa(robot.link_density * robot.link4_volume);
 robot.link_masses = [m1, m2, m3];
 % Positions of the CoMs wrt the joint frames
-robot.link2_com = [0.5*h1, 0, 0, 1];
-robot.link3_com = [0, 0, 0.5*a2, 1];
-robot.link4_com = [0, -0.5*h3, 0, 1];
+robot.link2_com = [-0.5*h1, 0, 0];
+robot.link3_com = [0, 0.5*a2, 0];
+robot.link4_com = [-0.5*h3, 0, 0];
 % Fixed parameters for DH
 robot.d0 = 0.15;
 robot.a1 = 0.4;

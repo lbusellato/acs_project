@@ -8,9 +8,9 @@ function U = potentialEnergy(robot)
 
     % Compute the positions of the CoMs wrt the base frame
     Ti = myDirectKinematics(robot.DH_table_sym);
-    link2_com = Ti(:,:,2)*robot.link2_com';
-    link3_com = Ti(:,:,3)*robot.link3_com';
-    link4_com = Ti(:,:,4)*robot.link4_com';
+    link2_com = Ti(1:3,1:3,2)*robot.link2_com' + Ti(1:3,4,2);
+    link3_com = Ti(1:3,1:3,3)*robot.link3_com' + Ti(1:3,4,3);
+    link4_com = Ti(1:3,1:3,4)*robot.link4_com' + Ti(1:3,4,4);
     coms = [link2_com, link3_com, link4_com];
     % The total potential energy is the sum of each link's potential energy
     U = 0;
