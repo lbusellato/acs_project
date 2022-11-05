@@ -27,10 +27,8 @@ function B = inertialMatrix(robot)
         % Apply the formula
         Bi = robot.link_masses(i)*JPi(:,:,i).'*JPi(:,:,i) + ...
             JOi(:,:,i).'*R(:,:,i)*link_I(:,:,i)*R(:,:,i).'*JOi(:,:,i);
-        B = B + Bi;
+        B = B + simplify(Bi);
     end
     % Simplify if possible
     B = simplify(B);
-    % Remove small coefficients
-    B = subsZero(B);
 end

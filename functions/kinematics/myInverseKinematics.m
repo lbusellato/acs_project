@@ -16,7 +16,7 @@ function [q1, q2, q3] = myInverseKinematics(robotParams, p, w)
     % Compute both solutions for q2
     q2p = -robotParams.d2-real(sqrt(wx^2+wy^2-robotParams.a1^2));
     q2n = -robotParams.d2+real(sqrt(wx^2+wy^2-robotParams.a1^2));
-    % Pick the solution that respects the joint limits
+    % Pick the solution that respects the joint limits of the prismatic joint
     if robotParams.jointLimits(2,1) <= q2p && q2p <= robotParams.jointLimits(2,2)
         q2 = q2p;
     else
