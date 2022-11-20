@@ -3,7 +3,7 @@ function U = potentialEnergy(robot)
     %   U = POTENTIALENERGY(robot) where robot is the robot parameter struct.
     
     % Set up symbols for the joint variables
-    syms d0 a1 a3 d2 q1 q2 q3 h1 a2 h3 c2 b2 r1 r3
+    syms d0 a1 a3 d2 q1(t) q2(t) q3(t) h1 a2 h3 c2 b2 r1 r3
 
     % Compute the positions of the CoMs wrt the base frame
     Ti = myDirectKinematics(robot.DH_table_sym);
