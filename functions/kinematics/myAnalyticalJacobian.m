@@ -1,7 +1,8 @@
-function JA = myAnalyticalJacobian(robotParams)
+function [JA, TA] = myAnalyticalJacobian(robotParams)
     % MYANALYTICALJACOBIAN  Computes the analytical jacobian from direct
-    % kinematics.
-    %   JA = MYANALYTICALJACOBIAN(robotParams) where robotParams is a 
+    % kinematics as well as the transformation matrix between it and the
+    % geometric jacobian.
+    %   [JA, TA] = MYANALYTICALJACOBIAN(robotParams) where robotParams is a 
     % struct containing the robot's DH table.
         
     % Set up symbols for the joint variables
@@ -15,5 +16,9 @@ function JA = myAnalyticalJacobian(robotParams)
     % Analytical jacobian - gradients of the positions
     JA = [diff(Ti(1:3,4,4), q1(t)), diff(Ti(1:3,4,4), q2(t)), diff(Ti(1:3,4,4), q3(t))];
     % Add the constant lines relative to angular velocity
-    JA = [JA; 1 0 0; 0 0 0; 0 0 1];
+    JA = [JA; 1 0 0; 0 0 -1; 0 0 0];
+    % Compute the geometric Jacobian
+    JG = myGeometricJacobian(robotParams);
+    % Compute the transformation matrix TA
+    TA = [eye(3), zeros(3); zeros(3), JG(4:6,:)*pinv(JA(4:6,:))];
 end

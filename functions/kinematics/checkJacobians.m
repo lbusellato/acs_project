@@ -13,7 +13,7 @@ function checkJacobians(robot, robotParams, config)
     % Actual values for joint variables
     new = [robotParams.fixed_params, config.JointPosition];
     % "My" analytical jacobian
-    my_JA = myAnalyticalJacobian(robotParams);
+    [my_JA, ~] = myAnalyticalJacobian(robotParams);
     % Compare my analytical Jacobian with the toolbox's in the current config
     toolbox_JA = evalSym(jacobian(Ti(1:3,4,4), [q1(t), q2(t), q3(t)]), robotParams, config);
     % Add the constant lines relative to angular velocity

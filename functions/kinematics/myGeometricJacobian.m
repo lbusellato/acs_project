@@ -23,12 +23,12 @@ function JG = myGeometricJacobian(robotParams)
             pi = Ti(1:3,4,i);
             % Compute the skew matrix of zi for the cross product
             Szi = skew(zi); 
-            JGi = [zi; Szi*(p3-pi)];
+            JGi = [Szi*(p3-pi); zi];
             % Add the column to the matrix
             JG = horzcat(JG, JGi);
         else
             % Apply the formula for a prismatic joint
-            JGi = [0; 0; 0; zi];
+            JGi = [zi; 0; 0; 0];
             % Add the column to the matrix
             JG = horzcat(JG, JGi);
         end
