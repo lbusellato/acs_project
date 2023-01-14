@@ -15,7 +15,7 @@ robot.dof = 3;
 % For subs
 robot.old = [d0, a1, d2, a3, h1, a2, h3, c2, b2, r1, r3, m1, m2, m3, ...
     q1(t), q2(t), q3(t)];
-
+robot.dq = [dq1(t), dq2(t), dq3(t)];
 % Lower and upper joint limits
 robot.jointLimits = [-pi pi;  % Joint 1 - revolute
                      -0.3 0;  % Joint 2 - prismatic
@@ -35,11 +35,16 @@ robot.link2_mass = vpa(robot.link_density * robot.link2_volume, 4);
 robot.link3_mass = vpa(robot.link_density * robot.link3_volume, 4);
 robot.link4_mass = vpa(robot.link_density * robot.link4_volume, 4);
 robot.link_masses = [m1, m2, m3];
-% Positions of the CoMs wrt each CoM frame
-robot.link2_com = [-0.5*h1, 0, 0];
-robot.link3_com = [0, 0.5*a2, 0];
-robot.link4_com = [-0.5*h3, 0, 0];
-robot.coms = cat(2,robot.link2_com.', robot.link3_com.', robot.link4_com.');
+% Positions of the CoMs wrt frame i
+robot.rc1_1 = [-0.5*h1, 0, 0];
+robot.rc2_2 = [0, 0.5*a2, 0];
+robot.rc3_3 = [-0.5*h3, 0, 0];
+robot.rci_i = cat(2,robot.rc1_1.', robot.rc2_2.', robot.rc3_3.');
+% Positions of the CoMs wrt frame i-1
+robot.rc1_0 = [0,0,-0.5*h1];
+robot.rc2_1 = [0,0,-0.5*a2];
+robot.rc3_2 = [0,0.5*h3, 0];
+robot.rci_i_1 = cat(2,robot.rc1_0.', robot.rc2_1.', robot.rc3_2.');
 % Vectors from Ci to the origin of frame i
 robot.r_2 = [-0.5*h1, 0, 0];
 robot.r_3 = [0, 0.5*a2, 0];
