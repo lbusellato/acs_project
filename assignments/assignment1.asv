@@ -39,7 +39,8 @@ fprintf('Analytical expression for JG:');
 robot.JG
 fprintf('My JG evaluated in the current robot config:');
 JG = vpa(subs(robot.JG, robot.q, [robot.config.JointPosition].'),3)
-fprintf("Toolbox's JG evaluated in the current robot config (note that the first 3 rows are swapped with the last 3):");
-JG = vpa(geometricJacobian(robot.urdf, robot.config, 'ee'),3)
-fprintf('\nAnalytical expression for JA:');
-robot.JA
+fprintf('Too')
+
+
+
+
