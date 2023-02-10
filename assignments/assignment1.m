@@ -15,6 +15,11 @@ close all;
 addpath(genpath('../common/'));
 % Load the robot struct
 robotStruct;
+% Show the robot
+show(robot.urdf, robot.config);
+xlim([-1 1]);
+ylim([-1 1]);
+zlim([0 0.6]);
 
 %% DIRECT KINEMATICS
 
@@ -35,6 +40,7 @@ config = toolboxInverseKinematics(robot);
 fprintf('Configuration from the toolbox inverse kinematics: [%.2f %.2f %.2f]\n\n', config)
 
 %% JACOBIANS
+
 fprintf('Analytical expression for JG:');
 robot.JG
 fprintf('My JG evaluated in the current robot config:');
