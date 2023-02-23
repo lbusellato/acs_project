@@ -17,4 +17,4 @@ robotStruct;
 
 %% OPERATIONAL SPACE DYNAMIC MODEL
 robot.tauA = vpa(simplify(robot.BA*robot.ddx + robot.CA + robot.gA), 4); 
-robot.tauA % u - ue = TA^T*(h-he)
+%robot.tauA % This takes a LONG time

@@ -8,7 +8,8 @@
 % Author: Lorenzo Busellato, VR472249, 2022
 %
 %--------------------------------------------------------------------------
-function tau = RNE(robot, q, dq, ddq, g0)
+function tau = RNE(robot, q, dq, ddq, g0)   
+    assume([q,dq,ddq],'real');
     w = sym(zeros(robot.dof, robot.dof+1));
     ddp = sym(zeros(robot.dof, robot.dof+1));
     dw = sym(zeros(robot.dof, robot.dof+1));

@@ -31,6 +31,9 @@ robot.ddq = sym('ddq', [3 1], 'real');
 robot.x = sym('x', [6 1], 'real');
 robot.dx = sym('dx', [6 1], 'real');
 robot.ddx = sym('ddx', [6 1], 'real');
+% Initial values
+robot.q0 = [0 0 0].';
+robot.dq0 = [0 0 0].';
 % Denavit-Hartenberg parameter table
 robot.dh_table = [ 0, 0, 0.15, 0;
            0.4, pi/2, 0, robot.q(1);
@@ -57,12 +60,13 @@ robot.JA = analyticalJacobian(robot);
 % Inertial information
 robot.g0 = [0; 0; -9.81]; % gravity
 robot.link_mass = [1.192 0.7317 0.8173]; % m1 m2 m3
+%robot.link_mass = [0.9 0.5 0.7]; % For the inverse dynamics control law
 robot.I1 = inertiaTensor(robot, 1);
 robot.I2 = inertiaTensor(robot, 2);
 robot.I3 = inertiaTensor(robot, 3);
 robot.I = cat(3, robot.I1, robot.I2, robot.I3);
 robot.pl1_0 = [-0.2 0 0].';   % CoM of link 1 wrt frame 1
-robot.pl2_1 = [0 (robot.q(2)+0.3) 0].'; % CoM of link 2 wrt frame 2
+robot.pl2_1 = [0 0.15 0].'; % CoM of link 2 wrt frame 2
 robot.pl3_2 = [-0.12 0 0].'; % CoM of link 3 wrt frame 3
 robot.pl1 = robot.T(1:3,1:3,2)*robot.pl1_0 + robot.T(1:3,4,2); % CoM of link 1 wrt base frame
 robot.pl2 = robot.T(1:3,1:3,3)*robot.pl2_1 + robot.T(1:3,4,3); % CoM of link 2 wrt base frame

@@ -30,6 +30,6 @@ function C = coriolis(robot)
     for k = 1:robot.dof
         C(1,3) = C(1,3) + 0.5*(dB(1,3,k)+dB(1,k,3)-dB(3,k,1))*robot.dq(k);
     end
-    C = vpa(simplify(C),4);
     C(3,1) = C(1,3); % Symmetry
+    C = vpa(simplify(C),4);
 end

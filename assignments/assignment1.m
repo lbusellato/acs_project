@@ -20,6 +20,8 @@ show(robot.urdf, robot.config);
 xlim([-1 1]);
 ylim([-1 1]);
 zlim([0 0.6]);
+subs(robot.pl1,robot.q,robot.config.JointPosition);
+scatter3(robot.pl1(1), robot.pl1(2),robot.pl1(3));
 
 %% DIRECT KINEMATICS
 
