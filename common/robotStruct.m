@@ -79,8 +79,8 @@ robot.C = coriolis(robot); % Coriolis and centrifugal acceleration matrix
 robot.g = gravity(robot);
 robot.tau = sym('tau', [3 1], 'real');
 % Dynamic model - operational space
-robot.JAinv = pinv(robot.JA);
-robot.JATinv = pinv(robot.JA.');
+robot.JAinv = simplify(pinv(robot.JA));
+robot.JATinv = robot.JAinv';
 robot.dJA = DanalyticalJacobian(robot);
 robot.BA = robot.JATinv*robot.B*robot.JAinv;
 robot.CA = robot.JATinv*robot.C*robot.dq - robot.BA*robot.dJA*robot.dq;
