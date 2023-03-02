@@ -26,6 +26,14 @@ for i = 1:robot.dof
     ei(i) = 1;
     B_RNE(:,i) = RNE(robot, robot.q, zero, ei, zero);
 end
-g_RNE = vpa(g_RNE,4);
-C_RNE = vpa(C_RNE,4);
-B_RNE = vpa(B_RNE,4);
+% Compare Lagrangian and RNE in a random config
+config = randomConfiguration(robot.urdf);
+new = [[config.JointPosition]'; 0.1; 0.1; 0.1];
+old = [robot.q;robot.dq];
+clc;
+disp("Gravity vector comparison:")
+vpa([subs(g_RNE,old,new), subs(robot.g,old,new)],4)
+disp("Coriolis and centrifugal acceleration matrix comparison:")
+vpa([subs(C_RNE,old,new), subs(robot.C*robot.dq,old,new)],4)
+disp("Inertia matrix comparison:")
+vpa([subs(B_RNE,old,new), subs(robot.B,old,new)],4)

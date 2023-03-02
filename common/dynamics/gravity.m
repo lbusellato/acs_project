@@ -8,14 +8,14 @@
 % Author: Lorenzo Busellato, VR472249, 2022
 %
 %--------------------------------------------------------------------------
-function g = gravity(robot)
-    g = sym(zeros(3,1));
+function G = gravity(robot)
+    G = sym(zeros(3,1));
     for i = 1:robot.dof
+        g = 0;
         for j = 1:robot.dof
-           m = robot.link_mass(j);
-           jp = robot.JP(:,j,i);
-           g(i) = g(i) - m*robot.g0.'*jp;
+           g = g + robot.link_mass(j)*robot.g0.'*robot.JP(:,j,i);
         end
+        G(i) = g;
     end
-    g = vpa(simplify(g),4);
+    G = vpa(simplify(G),4);
 end

@@ -1,6 +1,6 @@
 %--------------------------------------------------------------------------
 %
-% Assignment 10: Operational space inverse dynamics control law
+% Assignment 13: Admittance control
 %
 % Author: Lorenzo Busellato, VR472249, 2022
 %
@@ -15,26 +15,34 @@ addpath(genpath('../common/'));
 addpath(genpath('../simulink/'));
 % Load the robot struct
 robotStruct;
+% Set the robot in the [0 -0.3 0] configuration
+robot.config(2).JointPosition = -0.3;
 
 %% PARAMETERS
-
+% PD control law
+Kp = [50;50;50;50;50;50];
+Kd = [10;10;10;10;10;10];
+Mt = [1 1 1 1 1 1];
+KDt = [1 10 1 1 1 1];
+KPt = [1 20 1 1 1 1];
+% Environment pose
+xr = k([0 -0.2 0]);
+% Environment stiffness
+K = 1*eye(6);
 % Trajectory waypoints
-via1 = [pi/4 -pi/3 0 pi/2 pi/3 0];
-via2 = [-0.2 -0.1 -0.2 0 -0.1 0];
-via3 = [pi/3 pi/4 0 -pi/4 pi/4 0];
+via1 = [0 0 0];
+via2 = [0 -0.25 -0.1];
+via3 = [0 0 0];
 joint_wpts = [via1; via2; via3];
 % Transform the waypoints in "wayposes"
 op_wpts = zeros(6,size(joint_wpts,2));
 for i = 1:size(joint_wpts,2)
     op_wpts(:,i) = k(joint_wpts(:,i));
 end
-time = [0.5 1 1.5 2 2.5 3];
+time = [0 1.5 3];
 velBound = zeros(size(op_wpts));
 accBound = zeros(size(op_wpts));
-% Proportional and derivative gains
-Kp = [10;100;100;50;50;50];
-Kd = [15;15;15;10;10;10];
 
 %% SIMULINK 
 
-open('opInvDyn');
+open('admittance');

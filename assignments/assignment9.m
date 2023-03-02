@@ -21,8 +21,8 @@ robotStruct;
 % Constant pose reference
 xd = k([-pi/3 -0.1 pi/2]);
 % Proportional and derivative gains
-Kp = 50;
-Kd = 15;
+Kp = [50;50;50;50;50;50];
+Kd = [10;10;10;10;10;10];
 
 %% SIMULINK 
 

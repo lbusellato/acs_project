@@ -27,12 +27,12 @@ time = [0.5 1 1.5 2 2.5 3];
 velBound = zeros(size(wpts));
 accBound = zeros(size(wpts));
 % Proportional and derivative gains
-Kp = 50;
-Kd = 15;
-% Kp = 500; % Small rising time
-% Kd = 35; % Small rising time
+Kp = [50 50 50]';
+Kd = [10 10 10]';
 % Set to 0 to use actual B, to 1 to use B hat
 error = 0;
+% Constant reference
+qd = [pi/2, -0.2, pi];
 
 %% SIMULINK 
 
