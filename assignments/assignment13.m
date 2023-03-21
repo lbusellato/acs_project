@@ -28,18 +28,18 @@ KPt = [1 20 1 1 1 1];
 % Environment pose
 xr = k([0 -0.2 0]);
 % Environment stiffness
-K = 1*eye(6);
+K = 25*eye(6);
 % Trajectory waypoints
-via1 = [0 0 0];
-via2 = [0 -0.25 -0.1];
-via3 = [0 0 0];
+via1 = [0 0];
+via2 = [0 -0.25];
+via3 = [0 0];
 joint_wpts = [via1; via2; via3];
 % Transform the waypoints in "wayposes"
 op_wpts = zeros(6,size(joint_wpts,2));
 for i = 1:size(joint_wpts,2)
     op_wpts(:,i) = k(joint_wpts(:,i));
 end
-time = [0 1.5 3];
+time = [0 2.5];
 velBound = zeros(size(op_wpts));
 accBound = zeros(size(op_wpts));
 

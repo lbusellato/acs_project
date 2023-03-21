@@ -21,13 +21,13 @@ robot.config(2).JointPosition = -0.3;
 %% PARAMETERS
 % PD control law
 Kp = [50;75;50;50;50;50];
-Kd = [10;25;10;10;10;10];
-Md = diag([0.1;0.5;0.3;1;1;1]);
+Kd = [30;25;30;30;30;30];
+Md = diag([0.3;1;0.3;0.3;0.3;0.3]);
 invMd = inv(Md);
 % Environment pose
 xr = k([0 -0.1 0]);
 % Environment stiffness
-K = 1000*eye(6);
+K = 25*eye(6);
 % Trajectory waypoints
 via1 = [0 0 0];
 via2 = [0 -0.2 -0.2];
