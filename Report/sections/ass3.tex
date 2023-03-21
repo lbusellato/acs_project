@@ -1,0 +1,131 @@
+\section{Assignment 3}
+
+\subsection{Equations of motion}
+
+The equations of motion for an open chain robotic manipulator are:
+
+\begin{equation*}
+B(q)\ddot q+C(q,\dot q)\dot q+F_v\dot q+F_ssign(\dot q)+g(q)=\tau-J^T(q)h_e
+\end{equation*}
+
+Ignoring the contributions related to frictions and the external wrench ($F_v,F_s,he$), the equations reduce to:
+
+\begin{equation*}
+B(q)\ddot q+C(q,\dot q)\dot q+g(q)=\tau
+\end{equation*}
+
+where $\tau$ is the command torque, $C(q,\dot q)$ is the Coriolis matrix and $g(q)$ is the gravity term, which is given by:
+
+\begin{equation*}
+g_i(q)=-\sum\limits_{j=1}^nm_{l_i}g_0^Tj_{Pi}^{l_j}(q)\rightarrow g(q)=\begin{bmatrix}
+0\\0\\m_{l_3}g\left(a_3-\frac{1}{2}h_3\right)C_3
+\end{bmatrix}=\begin{bmatrix}
+0\\0\\ -0.9621C_3
+\end{bmatrix}
+\end{equation*}
+
+The $c_{ij}$ elements of $C(q,\dot q)$ are:
+
+\begin{equation*}
+c_{ij}=\sum\limits_{k=1}^n\frac{1}{2}\left(\frac{\partial b_{ij}}{\partial q_k}+\frac{\partial b_{ik}}{\partial q_j}-\frac{\partial b_{jk}}{\partial q_i}\right)\dot q_k
+\end{equation*}
+
+where $b_{ij},b_{ik}$ and $b_{jk}$ are the elements of the inertial matrix $B(q)$. The derivatives of the $B(q)$ matrix are:
+
+\begin{align*}
+\frac{\partial B}{\partial q_1}&=\begin{bmatrix}
+0&0&0\\ *&0&0\\ *&*&0
+\end{bmatrix}\\
+\frac{\partial B}{\partial q_2}&=\begin{bmatrix}
+3.098q_2+0.1962C_3+0.7099&0&0\\ *&0&0\\ *&*&0
+\end{bmatrix}\\
+\frac{\partial B}{\partial q_3}&=\begin{bmatrix} 
+- 0.0948S_3C_3 - 0.05885S_3 - 0.1962q_2S_3&                0& 0.03923C_3\\
+                                                     *&                0& -0.09808C_3\\
+                                         *& *&                0
+\end{bmatrix}
+\end{align*}
+
+So the $c_{ij}$ components are:
+
+\begin{align*}
+c_{11}&=\frac{1}{2}\left(\frac{\partial b_{11}}{\partial q_1}+\frac{\partial b_{11}}{\partial q_1}-\frac{\partial b_{11}}{\partial q_1}\right)\dot q_1+\frac{1}{2}\left(\frac{\partial b_{11}}{\partial q_2}+\frac{\partial b_{12}}{\partial q_1}-\frac{\partial b_{12}}{\partial q_1}\right)\dot q_2+\frac{1}{2}\left(\frac{\partial b_{11}}{\partial q_3}+\frac{\partial b_{13}}{\partial q_1}-\frac{\partial b_{13}}{\partial q_1}\right)\dot q_3\\
+&=\frac{1}{2}m_{l_2}(2d_2+2q_2-a_2)\dot q_2+m_{l_3}S_3C_3(a_3h_3-a_3^2-h_3^2-r_3^2)\dot q_3\\
+c_{12}&=
+\frac{1}{2}\left(\frac{\partial b_{12}}{\partial q_1}+\frac{\partial b_{11}}{\partial q_2}-\frac{\partial b_{21}}{\partial q_1}\right)\dot q_1+
+\frac{1}{2}\left(\frac{\partial b_{12}}{\partial q_2}+\frac{\partial b_{12}}{\partial q_2}-\frac{\partial b_{22}}{\partial q_1}\right)\dot q_2+
+\frac{1}{2}\left(\frac{\partial b_{12}}{\partial q_3}+\frac{\partial b_{13}}{\partial q_2}-\frac{\partial b_{23}}{\partial q_1}\right)\dot q_3\\
+&=0.5\dot q_1\dot q_2(3.098q_2 + 0.1962C_3 + 0.7099)\\
+c_{13}&=
+\frac{1}{2}\left(\frac{\partial b_{13}}{\partial q_1}+\frac{\partial b_{11}}{\partial q_3}-\frac{\partial b_{31}}{\partial q_1}\right)\dot q_1+
+\frac{1}{2}\left(\frac{\partial b_{13}}{\partial q_2}+\frac{\partial b_{12}}{\partial q_3}-\frac{\partial b_{32}}{\partial q_1}\right)\dot q_2+
+\frac{1}{2}\left(\frac{\partial b_{13}}{\partial q_3}+\frac{\partial b_{13}}{\partial q_3}-\frac{\partial b_{33}}{\partial q_1}\right)\dot q_3\\
+&=0.03923C_3\dot q_3^2 - 0.5\dot q_1(0.0948S_3C_3 + 0.05885S_3 + 0.1962q_2S_3)\dot q_3\\
+c_{22}&=
+\frac{1}{2}\left(\frac{\partial b_{22}}{\partial q_1}+\frac{\partial b_{21}}{\partial q_2}-\frac{\partial b_{21}}{\partial q_2}\right)\dot q_1+
+\frac{1}{2}\left(\frac{\partial b_{22}}{\partial q_2}+\frac{\partial b_{22}}{\partial q_2}-\frac{\partial b_{22}}{\partial q_2}\right)\dot q_2+
+\frac{1}{2}\left(\frac{\partial b_{22}}{\partial q_3}+\frac{\partial b_{23}}{\partial q_2}-\frac{\partial b_{23}}{\partial q_2}\right)\dot q_3\\
+&=0\\
+c_{23}&=
+\frac{1}{2}\left(\frac{\partial b_{23}}{\partial q_1}+\frac{\partial b_{21}}{\partial q_3}-\frac{\partial b_{31}}{\partial q_2}\right)\dot q_1+
+\frac{1}{2}\left(\frac{\partial b_{23}}{\partial q_2}+\frac{\partial b_{22}}{\partial q_3}-\frac{\partial b_{32}}{\partial q_2}\right)\dot q_2+
+\frac{1}{2}\left(\frac{\partial b_{23}}{\partial q_3}+\frac{\partial b_{23}}{\partial q_3}-\frac{\partial b_{33}}{\partial q_2}\right)\dot q_3\\
+&=0\\
+c_{33}&=
+\frac{1}{2}\left(\frac{\partial b_{33}}{\partial q_1}+\frac{\partial b_{31}}{\partial q_3}-\frac{\partial b_{31}}{\partial q_3}\right)\dot q_1+
+\frac{1}{2}\left(\frac{\partial b_{33}}{\partial q_2}+\frac{\partial b_{32}}{\partial q_3}-\frac{\partial b_{32}}{\partial q_3}\right)\dot q_2+
+\frac{1}{2}\left(\frac{\partial b_{33}}{\partial q_3}+\frac{\partial b_{33}}{\partial q_3}-\frac{\partial b_{33}}{\partial q_3}\right)\dot q_3\\
+&=0\\
+\end{align*}
+
+\newpage
+
+So the equations of motion are:
+
+\begin{equation*}
+B(q)\ddot q+C(q,\dot q)\dot q+g(q)=\tau
+\end{equation*}
+
+\begin{equation*}
+\resizebox{\textwidth}{!}{$
+\begin{bmatrix}
+\tau_1\\\tau_2\\\tau_3
+\end{bmatrix}=
+\begin{bmatrix}
+0.496\ddot q_1 - 0.6196\ddot q_2 + 0.7099\ddot q_1q_2 + 0.7099\dot q_1\dot q_2^2 + 1.549\ddot q_1q_2^2 + 0.05885\ddot q_1C_3 + 0.03923d\dot q_3S_3 + 0.0474\ddot q_1C_3^2 + 0.03923\dot q_3^3C_3 + 0.1962\ddot q_1q_2C_3 - 0.0474\dot q_1\dot q_3^2sin(2.0q_3) + 0.1962\dot q_1\dot q_2^2C_3 - 0.05885\dot q_1\dot q_3^2S_3 + 3.098\dot q_1\dot q_2^2q_2 - 0.1962\dot q_1\dot q_3^2q_2S_3\\ 0.5\dot q_2(3.098q_2 + 0.1962C_3 + 0.7099)\dot q_1^2 - 0.6196\ddot q_1 + 1.549\ddot q_2 - 0.09808d\dot q_3S_3\\ 0.04757d\dot q_3 + 0.9621C_3 + \dot q_1(0.03923C_3\dot q_3^2 - 0.5\dot q_1(0.0948S_3C_3 + 0.05885S_3 + 0.1962q_2S_3)\dot q_3) + 0.03923\ddot q_1S_3 - 0.09808\ddot q_2S_3 \end{bmatrix}$}
+\end{equation*}
+
+where $q = \begin{bmatrix}
+q_1&q_2&q_3
+\end{bmatrix}^T, \dot q = \begin{bmatrix}
+\dot q_1&\dot q_2&\dot q_3
+\end{bmatrix}^T, \ddot q = \begin{bmatrix}
+\ddot q_1&\ddot q_2&\ddot q_3
+\end{bmatrix}^T$ and:
+
+\begin{align*}
+B(q) &= B_1(q)+B_2(q)+B_3(q)\\&= \begin{bmatrix}
+K& -a_1( m_{l_2} + m_{l_3}) & \frac{1}{2}m_{l_3}a_1(2a_3-h_3)S_3\\
+* & m_{l_2} + m_{l_3} & -\frac{1}{2}m_{l_3}(2a_3-h_3)S_3\\
+* & * & a_3^2-a_3h_3+h_3^2+\frac{1}{2}r_3^2
+\end{bmatrix}\\
+K&=\frac{1}{2}m_{l_1}\left((a_1-h_1)^2+r_1^2\right)+m_{l_2}\left(a_1^2+\left(d_2+q_2-\frac{1}{2}a_2\right)^2+\frac{1}{12}\left(a_2^2+c_2^2\right)\right)\\&+m_{l_3}\left(a_1^2 + \left(d_2+q_2-\left(\frac{1}{2}h_3-a_3\right)C_3\right)^2+\frac{1}{12}(h_3^2+r_3^2)\right)
+\end{align*}
+
+\begin{equation*}
+\resizebox{\textwidth}{!}{$
+\hspace{-1cm}
+C(q,\dot q)\dot q=\begin{bmatrix}
+0.5\dot q_2^2(3.098q_2 + 0.1962C_3 + 0.7099) - 0.5\dot q_3^2(0.0958S_3C_3 + 0.05885S_3 + 0.1962q_2S_3) & 0.5\dot q_1\dot q_2(3.098q_2 + 0.1962C_3 + 0.7099) & 0.03923C_3\dot q_3^2 - 0.5\dot q_1(0.0948S_3C_3 + 0.05885S_3 + 0.1962q_2S_3)\dot q_3\\
+*&0&0 \\
+*& *& 0
+\end{bmatrix}$}
+\end{equation*}
+
+\begin{equation*}
+g(q)=\begin{bmatrix}
+0\\0\\-m_{l_3}g\left(a_3-\frac{1}{2}h_3\right)C_3
+\end{bmatrix}=\begin{bmatrix}
+0\\0\\ -0.9621C_3
+\end{bmatrix}
+\end{equation*}

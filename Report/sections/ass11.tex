@@ -1,0 +1,64 @@
+\section{Assignment 11}
+
+\subsection{Study the compliance control. Simulate the two “extreme” cases when the end-effector is interacting with the environment (considered as a planar surface)}
+
+Compliance control is a form of indirect force control, i.e. a motion control without the explicit closure of a force feedback loop. Such an architecture allows the handling of non-null external wrenches $h_e$:
+
+\begin{equation*}
+B(q)\ddot q + C(q,\dot q)\dot q + g(q) = \tau -J^T(q)h_e
+\end{equation*}
+
+By looking at the above expression at the equilibrium we can relate the external wrench to the position error $\tilde x$ in operational space, through the use of the vector of external forces in operational space $h_A$ and a compliance matrix $K^{-1}$:
+
+\begin{equation*}
+\tilde x = K^{-1}h_A
+\end{equation*}
+The new PD control law becomes:
+
+\begin{equation*}
+\tau = g(q) + J_{Ad}^T(q,\tilde x)(K_P\tilde x-K_DJ_{Ad}(q,\tilde x)\dot q)\;\;\;\;\;\text{with }K_P=50,K_D=10
+\end{equation*}
+
+The architecture is modelled in SIMULINK as follows:
+
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio,width=\textwidth]{compliance_sim}
+\caption{Compliance control in operational space SIMULINK model}
+\end{figure}
+
+To test the architecture, the manipulator was moved to $x_0=k(\begin{bmatrix}
+0&-0.3&0
+\end{bmatrix})$, with a desired position of $x_d=k(\begin{bmatrix}
+0&-0.2&0
+\end{bmatrix})$ and the environment placed at $x_e=k(\begin{bmatrix}
+0&-0.1&0
+\end{bmatrix})$. This was done to simplify the architecture, allowing for contact only in the $y$ direction.
+
+\newpage
+
+\subsection{$K_{env}\ll K_P$}
+
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio,width=\textwidth]{compliance_1}
+\caption{Compliance control - $K=1$}
+\end{figure}
+
+
+\subsection{$K_{env}= K_P$}
+
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio,width=\textwidth]{compliance_50}
+\caption{Compliance control - $K=50$}
+\end{figure}
+
+
+\subsection{$K_{env}\gg K_P$}
+
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio,width=\textwidth]{compliance_1000}
+\caption{Compliance control - $K=1000$}
+\end{figure}

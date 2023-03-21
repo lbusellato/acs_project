@@ -1,0 +1,39 @@
+\section{Assignment 5}
+
+\subsection{Compute the dynamic model in the operational space}
+
+The dynamic model in the operational space is described as follows:
+
+\begin{align*}
+B_A(x)\ddot x+C_A(x,\dot x)\dot x+g_A(x)=u-u_e
+\end{align*}
+where:
+\begin{align*}
+B_A(x)&=J_A^{-T}BJ_A^{-1}\\
+C_A\dot x &= (J_A^{-T}C-B_A\dot J_A)\dot q\\
+g_A(x)&=J_A^{-T}g\\
+u &= T_A^Th\\
+u_e&=T_A^Th_e
+\end{align*}
+
+with:
+
+\begin{equation*}
+T_A=\begin{bmatrix}
+1&0&0&0&0&0\\
+0&1&0&0&0&0\\
+0&0&1&0&0&0\\
+0&0&0&0&C_1&0\\
+0&0&0&0&S_1&0\\
+0&0&0&1&0&0
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}\dot J_A = \begin{bmatrix}
+C_1\dot q_2 - S_1\dot q_1(d_2 + q2) - a_1C_1\dot q_1 - a_3C_3S_1\dot q_1 - a_3C_1S_3\dot q_3& C_1\dot q_1& - a_3C_1S_3\dot q_1 - a_3C_3S_1\dot q_3\\
+S_1\dot q_2 + C_1\dot q_1(d_2 + q2) - a_1S_1\dot q_1 + a_3C_1C_3\dot q_1 - a_3S_1S_3\dot q_3& S_1\dot q_1&   a_3C_1C_3\dot q_3 - a_3S_1S_3\dot q_1\\
+0&                 0&  -a_3S_3\dot q_3\\
+0&0&0\\0&0&0\\0&0&0
+ \end{bmatrix}
+\end{equation*}
+
+The resulting matrices are not reported for space reasons.

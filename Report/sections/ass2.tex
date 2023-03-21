@@ -1,0 +1,268 @@
+\section{Assignment 2}
+
+To compute both the kinetic and potential energy, the positions of the centres of mass of each link are needed. With respect to each frame $\Sigma_i$ attached to link $i$:
+
+\begin{equation*}
+p_{l_1}^1=\begin{bmatrix}
+-\frac{h_1}{2}\\0\\0
+\end{bmatrix}\;\;\;\;\;\;\;\;\;p_{l_2}^2=\begin{bmatrix}
+0\\\frac{a_2}{2}\\0
+\end{bmatrix}\;\;\;\;\;\;\;\;\;p_{l_3}^3=\begin{bmatrix}
+-\frac{h_3}{2}\\0\\0
+\end{bmatrix}
+\end{equation*}
+
+Using the transformation matrices obtained with direct kinematics, the positions of the centres of mass with respect to the base frame $\Sigma_b$ are:
+
+\begin{equation*}
+p_{l_1}=R_b^1p_{l_1}^1+p_1=\begin{bmatrix}
+\left(a_1-\frac{h_1}{2}\right)C_1\\\left(a_1-\frac{h_1}{2}\right)S_1\\d_0
+\end{bmatrix}\;\;\;\;\;\;\;\;\;p_{l_2}=R_b^2p_{l_2}^2+p_2=\begin{bmatrix}
+\left(q_2+\overline d_2-\frac{a_2}{2}\right)S_1+a_1C_1\\-\left(q_2+\overline d_2-\frac{a_2}{2}\right)C_1+a_1S_1\\d_0
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+p_{l_3}=R_b^3p_{l_3}^3+p_3=\begin{bmatrix}
+(q_2+\overline d_2)S_1+a_1C_1+\left(a_3-\frac{h_3}{2}\right)S_1C_3\\ -(q_2+\overline d_2)C_1+a_1S_1-\left(a_3-\frac{h_3}{2}\right)C_1C_3\\d_0+\left(a_3-\frac{h_3}{2}\right)S_3
+\end{bmatrix}
+\end{equation*}
+
+
+\subsection{Compute the kinetic energy}
+
+The total kinetic energy for an open-chain manipulator is:
+
+\begin{equation*}
+\T(q,\dot q)=\frac{1}{2}\dot q^TB(q)\dot q\;\;\;\;\;\;\;B(q)=\sum\limits_{i=1}^n(m_{l_i}(J_P^{l_i})^TJ_P^{l_i}+(J_O^{l_i})^TR_b^iI_{l_i}^i{R_b^i}^TJ_O^{l_i})
+\end{equation*}
+
+where $B(q)$ is the inertia matrix, $I_{l_i}^i$ are the inertia tensors with respect to $\Sigma_i$, $J_P^{l_i}$ and $J_O^{l_i}$ are the linear and angular partial Jacobian matrices and $R_b^i$ are the rotation matrices that bring frame $\Sigma_i$ to frame $\Sigma_b$.
+
+The inertia tensors are obtained with Steiner's theorem:
+
+\begin{align*}
+I_{l_1}^1 &= I_{l_1}^{C_1}+m_{l_1}S^T(p_{l_1}^1)S(p_{l_1}^1)\\
+&=m_{l_1}\begin{bmatrix}
+\frac{1}{2}(r_1^2)&0&0\\
+0&\frac{1}{2}(3r_1^2+h_1^2)&0\\
+0&0&\frac{1}{2}(3r_1^2+h_1^2)
+\end{bmatrix}+m_{l_1}\begin{bmatrix}
+0&0&0\\0&\frac{h_1^2}{4}&0\\0&0&\frac{h_1^2}{4}
+\end{bmatrix}\\&=\frac{1}{2}m_{l_1}\begin{bmatrix}
+r_1^2&0&0\\
+0&3r_1^2+\frac{3h_1^2}{2}&0\\
+0&0&3r_1^2+\frac{3h_1^2}{2}
+\end{bmatrix}\\
+I_{l_2}^2 &= I_{l_2}^{C_2}+m_{l_2}S^T(p_{l_2}^2)S(p_{l_2}^2)\\
+&=m_{l_2}\begin{bmatrix}
+\frac{1}{12}(b_2^2+c_2^2)&0&0\\
+0&\frac{1}{12}(a_2^2+c_2^2)&0\\
+0&0&\frac{1}{12}(a_2^2+b_2^2)
+\end{bmatrix}+m_{l_2}\begin{bmatrix}
+\frac{a_2^2}{4}&0&0\\0&0&0\\0&0&\frac{a_2^2}{4}
+\end{bmatrix}\\
+&=\frac{1}{12}m_{l_2}\begin{bmatrix}
+3a_2^2+b_2^2+c_2^2&0&0\\0&a_2^2+c_2^2&0\\0&0&4a_2^2+b_2^2
+\end{bmatrix}\\
+I_{l_3}^3 &= I_{l_3}^{C_3}+m_{l_3}S^T(p_{l_3}^3)S(p_{l_3}^3)\\
+&=m_{l_3}\begin{bmatrix}
+\frac{1}{2}(r_3^2)&0&0\\
+0&\frac{1}{2}(3r_3^2+h_3^2)&0\\
+0&0&\frac{1}{2}(3r_3^2+h_3^2)
+\end{bmatrix}+m_{l_3}\begin{bmatrix}
+0&0&0\\0&\frac{h_3^2}{4}&0\\0&0&\frac{h_3^2}{4}
+\end{bmatrix}\\
+&=\frac{1}{2}m_{l_3}\begin{bmatrix}
+r_3^2&0&0\\
+0&3r_3^2+\frac{3}{2}h_3^2&0\\
+0&0&3r_3^2+\frac{3}{2}h_3^2
+\end{bmatrix}
+\end{align*}
+
+The links are assumed to be made up of an homogeneous material, specifically aluminium. Therefore the mass $m_{l_i}$ of link $i$ is $m_{l_i}=\rho V_{l_i}$, where $\rho=2710\;kg/m^3$ is the density of aluminium and $V_{l_i}$ is the volume of link $i$.
+
+\newpage
+
+The partial Jacobian matrices are constructed as follows:
+
+\begin{align*}
+J_P^{l_i}&=\begin{bmatrix}
+j_{P1}^{l_i}&\dots&j_{Pj}^{l_i}& 0&\dots&0
+\end{bmatrix}\;\;\text{where }j_{Pj}^{l_i}=\begin{cases}
+z_{j-1}&\text{prismatic joint}\\
+z_{j-1}\cross(p_{l_i}-p_{j-1})&\text{revolute joint}\\
+\end{cases}\\
+J_O^{l_i}&=\begin{bmatrix}
+j_{O1}^{l_i}&\dots&j_{Oj}^{l_i}& 0&\dots&0
+\end{bmatrix}\;\;\text{where }j_{Oj}^{l_i}=\begin{cases}
+0&\text{prismatic joint}\\
+z_{j-1}&\text{revolute joint}\\
+\end{cases}
+\end{align*}
+
+where $p_{j-1}$ is the position vector of the origin of frame $\Sigma_{j-1}$ and $z_{j-1}$ is the unit vector of axis $z$ of frame $\Sigma_{j-1}$, all with respect of $\Sigma_b$.
+
+\hspace{-0.75cm}
+\begin{minipage}[h]{0.6\textwidth}
+\begin{align*}
+J_P^{l_1}&=\begin{bmatrix}
+j_{P1}^{l_1} & 0 & 0
+\end{bmatrix}=\begin{bmatrix}
+-S_1\left(a_1 -\frac{h_1}{2}\right)&0&0\\C_1\left(a_1 -\frac{h_1}{2}\right)&0&0\\0&0&0
+\end{bmatrix}\\
+j_{P1}^{l_1}&=z_0\cross(p_{l_1}-p_{0})=\begin{bmatrix}
+-S_1\left(a_1 -\frac{h_1}{2}\right)&C_1\left(a_1 -\frac{h_1}{2}\right)&0\end{bmatrix}^T\\\\
+J_P^{l_2}&=\begin{bmatrix}
+j_{P1}^{l_2} & j_{P2}^{l_2} & 0
+\end{bmatrix}=\begin{bmatrix}
+\left(d_2 + q_2-\frac{a_2}{2}\right)C_1&  S_1& 0\\
+\left(d_2 + q_2-\frac{a_2}{2}\right)S_1& -C_1& 0\\
+                                    0&    0& 0
+\end{bmatrix}\\
+j_{P1}^{l_2}&=z_0\cross(p_{l_2}-p_{0})=\begin{bmatrix}
+\left(d_2 + q_2-\frac{a_2}{2}\right)C_1 &
+\left(d_2 + q_2-\frac{a_2}{2}\right)S_1 &
+                                    0
+\end{bmatrix}^T\\
+j_{P2}^{l_2}&=z_1=\begin{bmatrix}
+ S_1&-C_1&   0
+\end{bmatrix}^T\\\\
+J_P^{l_3}&=\begin{bmatrix}
+j_{P1}^{l_3} & j_{P2}^{l_3} &j_{P3}^{l_3}
+\end{bmatrix}=\begin{bmatrix}
+C_1C_3\left(a_3-\frac{h_3}{2}\right)&S_1&  S_1S_3\left(a_3-\frac{h_3}{2}\right)\\
+S_1C_3\left(a_3-\frac{h_3}{2}\right)&-C_1& -C_1S_3\left(a_3-\frac{h_3}{2}\right)\\ 
+                                      0  &  0  &             C_3\left(a_3-\frac{h_3}{2}\right)         
+\end{bmatrix}\\
+j_{P1}^{l_3}&=z_0\cross(p_{l_3}-p_{0})=\begin{bmatrix}
+C_1C_3\left(a_3-\frac{h_3}{2}\right)&
+S_1C_3\left(a_3-\frac{h_3}{2}\right)&
+                                      0
+\end{bmatrix}^T\\
+j_{P2}^{l_3}&=z_1=\begin{bmatrix}
+ S_1&
+ -C_1&
+    0
+\end{bmatrix}^T\\
+j_{P3}^{l_3}&=z_2\cross(p_{l_3}-p_{2})=\begin{bmatrix}
+   S_1S_3\left(a_3-\frac{h_3}{2}\right)&
+-C_1S_3\left(a_3-\frac{h_3}{2}\right)&
+             C_3\left(a_3-\frac{h_3}{2}\right) 
+\end{bmatrix}^T
+\end{align*}
+\end{minipage}
+\hspace{0.25cm}
+\begin{minipage}[h]{0.3\textwidth}
+\begin{align*}
+J_O^{l_1}&=\begin{bmatrix}
+j_{O1}^{l_1} & 0 & 0
+\end{bmatrix}=\begin{bmatrix}
+0&0&0\\0&0&0\\1&0&0
+\end{bmatrix}\\
+j_{O1}^{l_1}&=z_0=\begin{bmatrix}
+0&0&1
+\end{bmatrix}^T\\\\
+J_O^{l_2}&=\begin{bmatrix}
+j_{O1}^{l_2} & j_{O2}^{l_2} & 0
+\end{bmatrix}=\begin{bmatrix}
+0&0&0\\0&0&0\\1&0&0
+\end{bmatrix}\\
+j_{O1}^{l_2}&=z_0=\begin{bmatrix}
+0&0&1
+\end{bmatrix}^T\\
+j_{O2}^{l_2}&=\begin{bmatrix}
+0&0&0
+\end{bmatrix}^T\\\\
+J_O^{l_3}&=\begin{bmatrix}
+j_{O1}^{l_3} & j_{O2}^{l_3} & j_{O3}^{l_3}
+\end{bmatrix}=\begin{bmatrix}
+0&0&-C_1\\0&0&-S_1\\1&0&0
+\end{bmatrix}\\
+j_{O1}^{l_3}&=z_0=\begin{bmatrix}
+0&0&1
+\end{bmatrix}^T\\
+j_{O2}^{l_3}&=\begin{bmatrix}
+0&0&0
+\end{bmatrix}^T\\
+j_{O3}^{l_3}&=z_2=\begin{bmatrix}
+-C_1&-S_1&0
+\end{bmatrix}^T
+\end{align*}
+\end{minipage}
+
+So the inertial matrices of each joint are:
+
+\begin{align*}
+B_1(q)&=m_{l_1}(J_P^{l_1})^TJ_P^{l_1}+(J_O^{l_1})^TR_b^1I_{l_1}^1{R_b^1}^TJ_O^{l_1}\\
+&=m_{l_1}\begin{bmatrix}
+\frac{1}{2}((a_1-h_1)^2+r_1^2)& 0& 0\\ *& 0& 0\\ *& *& 0
+ \end{bmatrix}\\
+B_2(q)&=m_{l_2}(J_P^{l_2})^TJ_P^{l_2}+(J_O^{l_2})^TR_b^2I_{l_2}^2{R_b^2}^TJ_O^{l_2}\\
+&=m_{l_2}\begin{bmatrix}
+a_1^2+\left(d_2+q_2-\frac{1}{2}a_2\right)^2+\frac{1}{12}\left(a_2^2+c_2^2\right)&-a_1&0\\
+*& 1 & 0\\
+*&*&0
+\end{bmatrix}\\
+B_3(q)&=m_{l_3}(J_P^{l_3})^TJ_P^{l_3}+(J_O^{l_3})^TR_b^3I_{l_3}^3{R_b^3}^TJ_O^{l_3}\\
+&=m_{l_3}\begin{bmatrix}
+a_1^2 + \left(d_2+q_2-\left(\frac{1}{2}h_3-a_3\right)C_3\right)^2+\frac{1}{12}(h_3^2+r_3^2) & -a_1 & \frac{1}{2}a_1(2a_3-h_3)S_3\\
+* & 1 & -\frac{1}{2}(2a_3-h_3)S_3\\
+* & * & a_3^2-a_3h_3+h_3^2+\frac{1}{2}r_3^2
+\end{bmatrix}
+\end{align*} 
+     
+\newpage
+
+So the overall inertia matrix is:
+
+\begin{align*}
+B(q) &= B_1(q)+B_2(q)+B_3(q)\\&= \begin{bmatrix}
+K& -a_1( m_{l_2} + m_{l_3}) & \frac{1}{2}m_{l_3}a_1(2a_3-h_3)S_3\\
+* & m_{l_2} + m_{l_3} & -\frac{1}{2}m_{l_3}(2a_3-h_3)S_3\\
+* & * & a_3^2-a_3h_3+h_3^2+\frac{1}{2}r_3^2
+\end{bmatrix}\\&=\begin{bmatrix}
+0.4904q_2 + 0.05885C_3 + 0.0474C_3^2 + 0.1962q_2C_3 + 0.8173q_2^2 + 0.4796&          -0.6196&  0.03923S_3\\
+ * &          1.549 & -0.09808S_3\\ *& * &0.04757
+\end{bmatrix}
+\end{align*}
+
+with :
+
+\begin{align*}
+K&=\frac{1}{2}m_{l_1}\left((a_1-h_1)^2+r_1^2\right)+m_{l_2}\left(a_1^2+\left(d_2+q_2-\frac{1}{2}a_2\right)^2+\frac{1}{12}\left(a_2^2+c_2^2\right)\right)\\&+m_{l_3}\left(a_1^2 + \left(d_2+q_2-\left(\frac{1}{2}h_3-a_3\right)C_3\right)^2+\frac{1}{12}(h_3^2+r_3^2)\right)
+\end{align*}
+
+Finally, the kinetic energy is given by:
+
+\begin{align*}
+\T(q,\dot q) = \frac{1}{2}\dot q^TB(q)\dot q
+&=0.0237\dot q_1^2C_3^2 - 0.6196\dot q_1\dot q_2 + 0.3549\dot q_1^2 q_2 + 0.248\dot q_1^2 + 0.7745\dot q_2^2 + 0.02378\dot q_3^2 \\&+ 0.7745\dot q_1^2q_2^2 + 0.02942\dot q_1^2C_3 + 0.03923\dot q_1 \dot q_3S_3 - 0.09808\dot q_2\dot q_3S_3 + 0.09808\dot q_1^2q_2C_3
+\end{align*}
+
+The symbolic expression is not reported for space reasons.
+
+\subsection{Compute the potential energy}
+
+The potential energy is given by:
+
+\begin{equation*}
+\U(q)=-\sum\limits_{i=1}^nm_{l_i}g_0^Tp_{l_i}
+\end{equation*}
+
+where $g_0=\begin{bmatrix}
+0&0&-g
+\end{bmatrix}^T$ is the gravity acceleration vector in the base frame $\Sigma_b$.
+
+So:
+
+\begin{align*}
+\U_1&=-m_{l_1}gd_0\\
+\U_2&=-m_{l_2}gd_0\\
+\U_3(q)&=-m_{l_3}g\left(d_0+\left(a_3-\frac{h_3}{2}\right)S_3\right)
+\end{align*}
+
+Finally:
+
+\begin{equation*}
+\U(q) = -(\U_1+\U_2+\U_3(q))=\left[(m_{l_1}+m_{l_2}+m_{l_3})d_0+m_{l_3}\left(a_3-\frac{h_3}{2}\right)S_3\right]g = 0.9621S_3 + 4.033
+\end{equation*}
