@@ -28,7 +28,7 @@ xr = k([0 -0.1 0]);
 Kp = [50;50;50;50;50;50];
 Kd = [10;10;10;10;10;10];
 % Environment stiffness
-K = 1*eye(6);
+K = 50*eye(6);
 
 %% SIMULINK 
 

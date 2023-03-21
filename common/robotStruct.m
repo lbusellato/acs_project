@@ -65,6 +65,10 @@ robot.pl1_0 = [-0.2 0 0].';   % CoM of link 1 wrt frame 1
 robot.pl2_1 = [0 0.15 0].'; % CoM of link 2 wrt frame 2
 robot.pl3_2 = [-0.12 0 0].'; % CoM of link 3 wrt frame 3
 robot.rc = [robot.pl1_0 robot.pl2_1 robot.pl3_2];
+robot.r1_0 = [0.4 0 0].'; % frame 0 to frame 1 wrt frame 1
+robot.r2_1 = [0 -0.3-robot.q(2) 0].'; % frame 1 to frame 2 wrt frame 2
+robot.r3_2 = [0.24 0 0].'; % frame 2 to frame 3 wrt frame 3
+robot.r = [robot.r1_0 robot.r2_1 robot.r3_2];
 robot.I1 = inertiaTensor(robot, 1);
 robot.I2 = inertiaTensor(robot, 2);
 robot.I3 = inertiaTensor(robot, 3);
@@ -77,7 +81,7 @@ robot.pli = [robot.pl1 robot.pl2 robot.pl3];
 % Dynamic model - joint space
 robot.B = inertiaMatrix(robot); % Inertia matrix of the manipulator
 robot.C = coriolis(robot); % Coriolis and centrifugal acceleration matrix
-robot.g = gravity(robot);
+robot.g = gravity(robot); % Gravity term
 robot.tau = sym('tau', [3 1], 'real');
 % Dynamic model - operational space
 robot.JAinv = simplify(pinv(robot.JA));

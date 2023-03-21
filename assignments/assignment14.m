@@ -24,7 +24,7 @@ KP = 50*ones(6,1);
 KD = 100*ones(6,1);
 Md = diag([0.5;0.5;0.5;1;1;1]);
 invMd = inv(Md);
-KI = 0*ones(1,6);
+KI = 5*ones(1,6);
 KF = 10*ones(1,6);
 % Environment pose
 xr = k([0 -0.1 0]);

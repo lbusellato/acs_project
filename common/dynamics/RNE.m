@@ -3,26 +3,28 @@
 % RNE.m
 %
 % This script implements the recursive Newton-Euler formulation for the
-% computation of the equations of motion of the manipulator.
+% computation of the equations of motion of the manipulator. Friction and
+% the motor contributions are ignored.
 %
 % Author: Lorenzo Busellato, VR472249, 2022
 %
 %--------------------------------------------------------------------------
 function tau = RNE(robot, q, dq, ddq, g0)   
     assume([q,dq,ddq],'real');
+    % Arrays for the forward equations
     w = sym(zeros(robot.dof, robot.dof+1)); 
     ddp = sym(zeros(robot.dof, robot.dof+1));
     dw = sym(zeros(robot.dof, robot.dof+1));
     ddpc = sym(zeros(robot.dof, robot.dof+1));
     % Initial conditions
-    ddp(:,1) = -g0;
+    ddp(:,1) = g0;
     z0 = [0;0;1];
-    % Forward step
+    % Forward equations
     for i = 2:robot.dof + 1
         T = robot.partialT(:,:,i);
-        R = T(1:3,1:3);
-        r = T(1:3,4);
-        rc = robot.rc(:,i-1);
+        R = T(1:3,1:3); % Rotation from frame i-1 to frame i
+        r = robot.r(:,i-1); % Translation from frame i-1 to frame i wrt i
+        rc = robot.rc(:,i-1); % Translation from frame i to CoM i wrt i
         w(:,i) = R'*w(:,i-1);
         dw(:,i) = R'*dw(:,i-1);
         if robot.joint_config(i-1) == 'R' % revolute
@@ -35,17 +37,17 @@ function tau = RNE(robot, q, dq, ddq, g0)
         end
         ddpc(:,i) = ddp(:,i) + cross(dw(:,i), rc) + cross(w(:,i),cross(w(:,i), rc));
     end
-    % Initial conditions
+    % Arrays for the backward equations
     f = sym(zeros(robot.dof, robot.dof+1));
     mu = sym(zeros(robot.dof, robot.dof+1));
     tau = sym(zeros(robot.dof, 1));
-    % Backward step
+    % Backward equations
     for i = robot.dof:-1:1
         T = robot.partialT(:,:,i+2);
         Tm1 = robot.partialT(:,:,i+1);
         R = T(1:3,1:3);
         Rm1 = Tm1(1:3,1:3);
-        r = Tm1(1:3,4);
+        r = robot.r(:,i);
         I = robot.I(:,:,i);
         rc = robot.rc(:,i);
         m = robot.link_mass(i);

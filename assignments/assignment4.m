@@ -28,7 +28,7 @@ for i = 1:robot.dof
 end
 % Compare Lagrangian and RNE in a random config
 config = randomConfiguration(robot.urdf);
-new = [[config.JointPosition]'; 0.1; 0.1; 0.1];
+new = [[config.JointPosition]'; 0.1; -0.1; 0.1];
 old = [robot.q;robot.dq];
 clc;
 disp("Gravity vector comparison:")

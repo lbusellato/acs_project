@@ -10,9 +10,9 @@
 %--------------------------------------------------------------------------
 function C = coriolis(robot)
     C = sym(zeros(3));
-    dB1 = vpa(simplify(diff(robot.B, robot.q(1))*robot.dq(1)),4);
-    dB2 = vpa(simplify(diff(robot.B, robot.q(2))*robot.dq(2)),4);
-    dB3 = vpa(simplify(diff(robot.B, robot.q(3))*robot.dq(3)),4);
+    dB1 = vpa(simplify(diff(robot.B, robot.q(1))),4);
+    dB2 = vpa(simplify(diff(robot.B, robot.q(2))),4);
+    dB3 = vpa(simplify(diff(robot.B, robot.q(3))),4);
     dB = cat(3, dB1, dB2, dB3);
     for k = 1:robot.dof
         C(1,1) = C(1,1) + 0.5*(dB(1,1,k)+dB(1,k,1)-dB(1,k,1))*robot.dq(k);
